@@ -4,10 +4,16 @@
 
 using namespace std;
 
-
+/**
+ * purp: override c++ bulit in mod function, which can return negative values
+ * note: if c++ (a%b) operation returns negative value, add b which produces (a-1)
+ */
 int mod (int a, int b);
 
-
+/**
+ * purp: initialize source class with string parameter, tape head set to beginning of memory,
+ *       memory initially set to 10 memory cells, all set to 0
+ */
 Source::Source(string brainfuck) {
     source_code     = brainfuck;
     tape_head_loc   = 0;
@@ -18,10 +24,17 @@ Source::Source(string brainfuck) {
         memory_tape[i] = 0;
 }
 
+/**
+ * purp: ensure that the memory tape storage is properly deleted
+ */
 Source::~Source() {
     delete [] memory_tape;
 }
 
+/**
+ * purp: check every character in the brainfuck code, return false on invalid commands
+ * note: prints out location of first located invalid command
+ */
 bool Source::is_valid() {
     int str_len = source_code.length();
 
@@ -36,6 +49,10 @@ bool Source::is_valid() {
     return true;
 }
 
+/**
+ * purp: check to see if char parameter is included in the list of valid symbols
+ *       returns true at first valid character that matches the given parameter
+ */
 bool Source::in(char character, char valid_symbols[]) {
     /// 8 valid characters to check
     for (int i = 0; i < 8; i++)
@@ -45,22 +62,30 @@ bool Source::in(char character, char valid_symbols[]) {
     return false;
 }
 
+/**
+ * purp: check to see if all brackets are matched correctly
+ * note: utilizes char_stack class in match_stack.h
+ */
 bool Source::is_matched() {
     Stack char_stack;
     int str_len = source_code.length();
 
     for (int i = 0; i < str_len; i++) {
         if (source_code[i] == '[')
+            /// if open bracket, push the bracket onto the stack
             char_stack.push(source_code[i]);
         else if (source_code[i] == ']' && !char_stack.stack_empty())
+            /// if open brackets are on the stack, pop one off (pop off matching open bracket)
             char_stack.pop();
         else if (source_code[i] == ']' && char_stack.stack_empty()) {
+            /// if close bracket but empty stack, indicates no matching open bracket
             cout << "IMPROPERLY MATCHED BRACKETS" << endl;
             return false;
         }
     }
 
     if (!char_stack.stack_empty()) {
+        /// if stack is not empty by the end of the code, indicates hanging open bracket
         cout << "IMPROPERLY MATCHED BRACKETS" << endl;
         return false;
     }
@@ -68,16 +93,21 @@ bool Source::is_matched() {
 }
 
 /// download more RAM here
+/**
+ * purp: expand the dynamic array containing the memory tape
+ */
 void Source::expand() {
     int new_memory_size = memory_size * 2 + 1;
     int *downloaded_RAM = new int[new_memory_size];
 
+    /// copy old memory values into new expanded array
     for (int i = 0; i < new_memory_size; i++)
         if (i < memory_size)
             downloaded_RAM[i] = memory_tape[i];
         else
             downloaded_RAM[i] = 0;
 
+    /// update memory to increased size, update pointer to memory
     memory_size = new_memory_size;
     memory_tape = downloaded_RAM;
 }
@@ -86,6 +116,9 @@ void Source::expand() {
 *                   EVALUATE                        *
 ****************************************************/
 
+/**
+ * purp: code valuation manager
+ */
 void Source::evaluate() {
     /// make this dynamic array
     int *loop_locations = new int[50];
@@ -171,10 +204,10 @@ void Source::evaluate() {
 
 }
 
-int mod (int a, int b)
-{
-   int ret = a % b;
-   if(ret < 0)
-     ret+=b;
-   return ret;
+int mod (int a, int b) {
+   int result = a % b;
+   if(result < 0)
+     result += b;
+     
+   return result;
 }
