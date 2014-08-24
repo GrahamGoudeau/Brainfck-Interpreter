@@ -6,7 +6,7 @@ using namespace std;
 
 /**
  * purp: override c++ bulit in mod function, which can return negative values
- * note: if c++ (a%b) operation returns negative value, add b which produces (a-1)
+ * note: if c++ (a%b) operation returns negative value, add b which produces (b-1)
  */
 int mod (int a, int b);
 
