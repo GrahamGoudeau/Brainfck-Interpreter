@@ -5,7 +5,7 @@ An interpreter for the esoteric programming language Brainfuck, written in C++. 
 * ">": increment tape reader head
 * "<": decrement tape reader head
 * "+": increase current memory cell value (mod 256)
-* "-": decrease current memory cell value (mod 246)
+* "-": decrease current memory cell value (mod 256)
 * "[": mark beginning of code to be looped
 * "]": return to beginning of loop if the current cell value is not zero else continue
 * ",": read in a single char from the keyboard 
