@@ -9,6 +9,7 @@ Note: Brainfuck treats the memory cell values as ASCII values, so the cell value
 
 Errors that could be generated:
   * if tape_location is set to a value less than zero, the interpreter will return "ERROR: INVALID MEMORY INDEX ACCESS"
-  * if the code contains unmatched brackets, the interpreter will return "ERROR: UNMATCHED BRACKETS"
+  * if the code contains unmatched brackets, the interpreter will return "IMPROPERLY MATCHED BRACKETS"
+  * if the interpreter reaches an invalid command it will return "INVALID COMMAND AT [LOCATION]"
   * the interpreter is unable to catch unbounded loops; if the user writes one (such as "+[>+]") the interpreter will crash
     as the program will have tried to allocate an infinite amount of memory
