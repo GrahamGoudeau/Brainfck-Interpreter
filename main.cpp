@@ -1,12 +1,3 @@
-/**
-    Brainfuck Interpreter
-
-    TODO:
-        change the source code from a string to an array of valid chars
-            (eliminates the need for that weird space removing algorithm)
-
-*/
-
 #include <iostream>
 #include <algorithm>
 #include "Code.h"
