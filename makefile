@@ -1,13 +1,16 @@
-all: brainfck_1.0
+all: brainfck_1
 
-brainfck_1.0: main.o Code.o Stack.o
-	g++ main.o Code.o Stack.o -o brainfck_1.0
-              
 main.o: main.cpp
-	g++ -c main.cpp -o main.p
+	g++ -c main.cpp -o main.o
 
-Code.o: Code.cpp Code.h      
-	g++ -c Code.cpp Code.h -o Code.o
-	
+Code.o: Code.cpp Code.h
+	g++ -c Code.cpp -o Code.o
+
 Stack.o: match_stack.h stack.cpp
-	g++ -c match_stack.h stack.cpp -o Stack.o
+	g++ -c stack.cpp -o Stack.o
+
+brainfck_1: main.o Code.o Stack.o
+	g++ main.o Code.o Stack.o -o brainfck_1
+
+clean:
+	$(RM) brainfck_1 *.o
