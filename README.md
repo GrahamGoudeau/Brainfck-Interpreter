@@ -12,7 +12,7 @@ An interpreter for the esoteric programming language Brainfuck, written in C++. 
 * ".": print out the char that results from the current cell's ASCII value
 
 
-The interpreter is able to check for matching brackets, check for invalid command characters, and implements the memory tape as a dynamic array that starts at memory cell 0 and is unbounded in the positive direction.
+The interpreter is able to check for matching brackets, check for invalid command characters, and implements the memory tape as a dynamic array that starts at memory cell 0 and is (effectively) unbounded in the positive direction (limited by available system memory).
 
 To compile, navigate to the program directory and type "make".  "make clean" removes the executable, *.o, and *~ files
 
