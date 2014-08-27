@@ -14,7 +14,7 @@ An interpreter for the esoteric programming language Brainfuck, written in C++. 
 
 The interpreter is able to check for matching brackets, check for invalid command characters, and implements the memory tape as a dynamic array that starts at memory cell 0 and is (effectively) unbounded in the positive direction (limited by available system memory).
 
-To compile, navigate to the program directory and type "make".  "make clean" removes the executable, *.o, and *~ files
+To compile, navigate to the program directory and type "make".  "make clean" removes the executable, *.o, and *~ files.  Copy and paste the one-line version of the "hello world" program (located in bftest.txt) to test the behavior of the program.
 
 Note: Brainfuck treats the memory cell values as ASCII values, so the cell values are always taken modulo 256
 
