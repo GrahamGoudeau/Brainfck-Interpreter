@@ -120,11 +120,6 @@ void Source::expand() {
  * purp: code valuation manager
  */
 void Source::evaluate() {
-    /// make this dynamic array
-    int *loop_locations = new int[50];
-    int current_loop    = 0;
-
-    /// do we need a stack?
     int_Stack int_stack;
 
     string output_string = "";
