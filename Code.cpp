@@ -121,7 +121,7 @@ void Source::expand() {
  */
 void Source::evaluate() {
     /// make this dynamic array
-    int *loop_locations = new int[50];
+    int *loop_locations = new int[50000];
     int current_loop    = 0;
 
     /// do we need a stack?
