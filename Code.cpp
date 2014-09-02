@@ -141,8 +141,6 @@ void Source::evaluate() {
         else if (command == '<')
             if (tape_head_loc - 1 < 0) {
                 cout << "ERROR: INVALID MEMORY INDEX ACCESS\n";
-		cout << tape_head_loc << endl;
-		cout << index << endl;
                 return;
             }
             else
