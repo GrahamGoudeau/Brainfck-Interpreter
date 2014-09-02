@@ -15,6 +15,7 @@ public:
 private:
     char *char_stack;
     int stack_index;
+    int mem_size;
 
     void expand();
 };
@@ -30,7 +31,8 @@ public:
 private:
     int *int_stack;
     int stack_index;
-
+       
+    int mem_size;
     void expand();
 };
 

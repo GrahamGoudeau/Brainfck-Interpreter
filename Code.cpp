@@ -141,6 +141,8 @@ void Source::evaluate() {
         else if (command == '<')
             if (tape_head_loc - 1 < 0) {
                 cout << "ERROR: INVALID MEMORY INDEX ACCESS\n";
+		cout << tape_head_loc << endl;
+		cout << index << endl;
                 return;
             }
             else
@@ -148,19 +150,20 @@ void Source::evaluate() {
 
         else if (command == '[') {
             if (memory_tape[tape_head_loc] != 0) {
-                loop_locations[current_loop] = index + 1;
-                current_loop++;
+		cout << "pushing " << index << endl;
+		int_stack.push(index);        
             }
             else
                 while (source_code[index] != ']')
                     index++;
         }
-        else if (command == ']' && memory_tape[tape_head_loc] != 0)
-            index = loop_locations[current_loop - 1] - 1;
-
+        else if (command == ']' && memory_tape[tape_head_loc] != 0) {
+	    index = int_stack.pop();
+	    cout << "going back to " << index << endl;
+	    int_stack.push(index);	
+	}
         else if (command == ']' && memory_tape[tape_head_loc] == 0)
-            current_loop--;
-
+	    int_stack.pop();
         else if (command == '.') {
             char output_letter = memory_tape[tape_head_loc];
             output_string += output_letter;
@@ -187,8 +190,6 @@ void Source::evaluate() {
         string wait;
         getline(cin, wait);*/
     }
-
-    delete [] loop_locations;
 
     for (int i = 0; i < memory_size; i++)
         cout << memory_tape[i] << " ";
