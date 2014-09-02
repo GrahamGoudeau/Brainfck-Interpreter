@@ -120,7 +120,7 @@ void Source::expand() {
  * purp: code valuation manager
  */
 void Source::evaluate() {
-    int_Stack int_stack;
+    int_Stack loop_loc_stack;
 
     string output_string = "";
     int source_code_length = source_code.length();
@@ -150,20 +150,18 @@ void Source::evaluate() {
 
         else if (command == '[') {
             if (memory_tape[tape_head_loc] != 0) {
-		cout << "pushing " << index << endl;
-		int_stack.push(index);        
+		loop_loc_stack.push(index);        
             }
             else
                 while (source_code[index] != ']')
                     index++;
         }
         else if (command == ']' && memory_tape[tape_head_loc] != 0) {
-	    index = int_stack.pop();
-	    cout << "going back to " << index << endl;
-	    int_stack.push(index);	
+	    index = loop_loc_stack.pop();
+	    loop_loc_stack.push(index);	
 	}
         else if (command == ']' && memory_tape[tape_head_loc] == 0)
-	    int_stack.pop();
+	    loop_loc_stack.pop();
         else if (command == '.') {
             char output_letter = memory_tape[tape_head_loc];
             output_string += output_letter;
