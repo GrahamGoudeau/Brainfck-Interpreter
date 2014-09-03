@@ -120,12 +120,7 @@ void Source::expand() {
  * purp: code valuation manager
  */
 void Source::evaluate() {
-    /// make this dynamic array
-    int *loop_locations = new int[50000];
-    int current_loop    = 0;
-
-    /// do we need a stack?
-    int_Stack int_stack;
+    int_Stack loop_loc_stack;
 
     string output_string = "";
     int source_code_length = source_code.length();
@@ -153,19 +148,18 @@ void Source::evaluate() {
 
         else if (command == '[') {
             if (memory_tape[tape_head_loc] != 0) {
-                loop_locations[current_loop] = index + 1;
-                current_loop++;
+		loop_loc_stack.push(index);        
             }
             else
                 while (source_code[index] != ']')
                     index++;
         }
-        else if (command == ']' && memory_tape[tape_head_loc] != 0)
-            index = loop_locations[current_loop - 1] - 1;
-
+        else if (command == ']' && memory_tape[tape_head_loc] != 0) {
+	    index = loop_loc_stack.pop();
+	    loop_loc_stack.push(index);	
+	}
         else if (command == ']' && memory_tape[tape_head_loc] == 0)
-            current_loop--;
-
+	    loop_loc_stack.pop();
         else if (command == '.') {
             char output_letter = memory_tape[tape_head_loc];
             output_string += output_letter;
@@ -192,8 +186,6 @@ void Source::evaluate() {
         string wait;
         getline(cin, wait);*/
     }
-
-    delete [] loop_locations;
 
     for (int i = 0; i < memory_size; i++)
         cout << memory_tape[i] << " ";
