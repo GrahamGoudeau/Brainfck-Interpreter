@@ -173,18 +173,6 @@ void Source::evaluate() {
                 memory_tape[tape_head_loc] = input[0];
         }
 
-        /**for (int i = 0; i < memory_size; i++)
-            cout << memory_tape[i] << " ";
-        cout << endl;
-
-        for (int i = 0; i < source_code_length; i++) {
-            if (i == index) cout << "*";
-            cout << source_code[i] << " ";
-        }
-        cout << endl << endl;
-
-        string wait;
-        getline(cin, wait);*/
     }
 
     for (int i = 0; i < memory_size; i++)
