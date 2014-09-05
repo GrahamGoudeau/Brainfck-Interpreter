@@ -23,6 +23,7 @@ private:
 	bool debug;
 
 	bool in(char character, char valid_symbols[]);
+	bool in_debug(string source);
 	void expand();
 };
 
