@@ -44,6 +44,8 @@ Source::~Source() {
  */
 bool Source::is_valid() {
 	int str_len = source_code.length();
+	bool at_signal = false;
+	bool debug_command = false;
 
 	char valid_symbols[10] = {'<', '>', '+', '-', '[', ']', '.', ',', '@', 'd'};
 	for (int i = 0; i < str_len; i++) {
@@ -51,8 +53,22 @@ bool Source::is_valid() {
 			cout << "INVALID COMMAND AT " << i + 1 << ": '" << source_code[i] << "'" << endl;
 			return false;
 		}
+		else if (source_code[i] == '@')
+			at_signal = true;
+
+		if (source_code[i] == 'd' && !at_signal) {
+			cout << "INVALID COMMAND AT " << i + 1 << ": '" << source_code[i] << "'" << endl;
+			return false;
+		}
+		else if (source_code[i] == 'd')
+			debug_command = true;
 	}
 
+	
+	if (at_signal && !debug_command) {
+		cout << "COMMAND SIGNAL '@' SENT; NO COMMAND FOUND" << endl;
+		return false;
+	}
 	return true;
 }
 
@@ -128,7 +144,7 @@ void Source::expand() {
 }
 
 /****************************************************
-*				   EVALUATE						*
+*		      EVALUATE          	    *
 ****************************************************/
 
 /**
