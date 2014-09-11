@@ -205,8 +205,12 @@ void Source::evaluate() {
 		}
 
 		if (debug) {
-			for (int i = 0; i < memory_size; i++)
+			for (int i = 0; i < memory_size; i++) {
+				if (i == tape_head_loc)
+					cout << "*";
+
 				cout << memory_tape[i] << " ";
+			}
 			cout << endl;
 
 			for (int i = 0; i < source_code_length; i++) {
