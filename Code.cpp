@@ -16,9 +16,16 @@ int mod (int a, int b);
  */
 Source::Source(string brainfuck) {
 	source_code	 = brainfuck;
-	tape_head_loc   = 0;
+	tape_head_loc	 = 0;
 	memory_size	 = 10;
 	memory_tape	 = new int[memory_size];
+	debug		 = in_debug(source_code);
+	if (debug) {
+		int source_length = source_code.length();
+		source_code.erase(source_length - 1, 1);
+		source_code.erase(source_length - 2, 1);
+	}
+		
 
 	for (int i = 0; i < memory_size; i++)
 		memory_tape[i] = 0;
@@ -37,13 +44,31 @@ Source::~Source() {
  */
 bool Source::is_valid() {
 	int str_len = source_code.length();
+	bool at_signal = false;
+	bool debug_command = false;
 
-	char valid_symbols[8] = {'<', '>', '+', '-', '[', ']', '.', ','};
+	char valid_symbols[10] = {'<', '>', '+', '-', '[', ']', '.', ',', '@', 'd'};
 	for (int i = 0; i < str_len; i++) {
 		if (!in(source_code[i], valid_symbols)) {
 			cout << "INVALID COMMAND AT " << i + 1 << ": '" << source_code[i] << "'" << endl;
 			return false;
 		}
+
+		else if (source_code[i] == '@')
+			at_signal = true;
+
+		if (source_code[i] == 'd' && !at_signal) {
+			cout << "INVALID COMMAND AT " << i + 1 << ": '" << source_code[i] << "'" << endl;
+			return false;
+		}
+		else if (source_code[i] == 'd')
+			debug_command = true;
+	}
+
+	
+	if (at_signal && !debug_command) {
+		cout << "COMMAND SIGNAL '@' SENT; NO COMMAND FOUND" << endl;
+		return false;
 	}
 
 	return true;
@@ -54,8 +79,8 @@ bool Source::is_valid() {
  *	   returns true at first valid character that matches the given parameter
  */
 bool Source::in(char character, char valid_symbols[]) {
-	/// 8 valid characters to check
-	for (int i = 0; i < 8; i++)
+	/// 10 valid characters to check
+	for (int i = 0; i < 10; i++)
 		if (valid_symbols[i] == character)
 			return true;
 
@@ -92,6 +117,14 @@ bool Source::is_matched() {
 	return true;
 }
 
+bool Source::in_debug(string source) {
+	int source_length = source.length();
+	if (source[source_length - 1] == 'd' &&
+		source[source_length - 2] == '@')
+		return true;
+	return false;
+}
+
 /// download more RAM here
 /**
  * purp: expand the dynamic array containing the memory tape
@@ -113,7 +146,7 @@ void Source::expand() {
 }
 
 /****************************************************
-*				   EVALUATE						*
+*		      EVALUATE          	    *
 ****************************************************/
 
 /**
@@ -173,6 +206,25 @@ void Source::evaluate() {
 				memory_tape[tape_head_loc] = input[0];
 		}
 
+		if (debug) {
+			for (int i = 0; i < memory_size; i++) {
+				if (i == tape_head_loc)
+					cout << "*";
+
+				cout << memory_tape[i] << " ";
+			}
+			cout << endl;
+
+			for (int i = 0; i < source_code_length; i++) {
+				if (i == index) cout << "*";
+					cout << source_code[i] << " ";
+			}
+			cout << endl << endl;
+
+			string wait;
+			getline(cin, wait);
+			if (wait == "done") break;
+		}
 	}
 
 	for (int i = 0; i < memory_size; i++)

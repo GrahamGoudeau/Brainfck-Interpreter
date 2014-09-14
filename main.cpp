@@ -31,7 +31,8 @@ int main()
 
 void print_begin_prompt() {
 	cout << "BRAINFUCK INTERPRETER\n";
-	cout << "Type 'exit' to quit\n\n";
+	cout << "End code with '@d' to enter debug mode; type 'done' to quit debugging\n";
+	cout << "Type 'exit' to quit the interpreter\n\n";
 }
 
 string remove_spaces(string brainfuck) {
