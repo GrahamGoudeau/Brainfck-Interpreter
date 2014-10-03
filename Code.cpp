@@ -35,7 +35,8 @@ Source::Source(string brainfuck) {
  * purp: ensure that the memory tape storage is properly deleted
  */
 Source::~Source() {
-	delete [] memory_tape;
+	if (memory_tape)
+		delete [] memory_tape;
 }
 
 /**
@@ -141,6 +142,7 @@ void Source::expand() {
 			downloaded_RAM[i] = 0;
 
 	/// update memory to increased size, update pointer to memory
+	delete [] memory_tape;
 	memory_size = new_memory_size;
 	memory_tape = downloaded_RAM;
 }
@@ -233,7 +235,6 @@ void Source::evaluate() {
 
 	if (output_string.length())
 		cout << output_string << endl;
-
 }
 
 int mod (int a, int b) {
