@@ -20,6 +20,7 @@ void Stack::expand() {
 	    new_stack[i] = char_stack[i];
     }
 
+    delete [] char_stack;
     mem_size = new_mem_size;
     char_stack = new_stack;
 
@@ -60,6 +61,7 @@ void int_Stack::expand() {
 	    new_stack[i] = int_stack[i];
     }
 
+    delete [] int_stack;
     mem_size = new_mem_size;
     int_stack = new_stack;
 }
